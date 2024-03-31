@@ -16,3 +16,13 @@ int buscarUsuario (ListaUsuarios lu, char *nom){
 		return -1;
 	}
 }
+void aniadirUsuario(ListaUsuarios *lU, Usuario u){
+	if(lU->numU < lU->tam){
+		lU->aUsuarios[lU->numU] = u;
+		lU->numU++;
+		printf("Usuario aniadido correctamente\n");
+	}else{
+		printf("La lista esta completa\n");
+	}
+	fflush(stdout);
+}

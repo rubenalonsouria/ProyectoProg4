@@ -7,6 +7,8 @@ typedef struct listaUsuarios{
 	int numU;
 }ListaUsuarios;
 
+int buscarUsuario(ListaUsuarios lU, char *nom);
+void aniadirUsuario(ListaUsuarios *lU, Usuario u);
 
 
 

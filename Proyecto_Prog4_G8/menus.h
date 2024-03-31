@@ -3,5 +3,6 @@
 
 char menuPrincipal();
 char menuRegistro();
+char menuUsuario();
 
 #endif /* MENUS_H_ */

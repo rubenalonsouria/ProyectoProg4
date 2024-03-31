@@ -5,22 +5,22 @@
 
 Usuario conseguirUsuario(){
 	Usuario u;
-	printf("Introduce el nombre: /n");
+	printf("Introduce el nombre: \n");
 	fflush(stdout);
 	fflush(stdin);
 	gets(u.nombre);
-	printf("Introduce el apellido: /n");
+	printf("Introduce el apellido: \n");
 	fflush(stdout);
 	fflush(stdin);
 	gets(u.apellido);
-	printf("Introduzca el dni");
+	printf("Introduzca el dni \n");
 	fflush(stdout);
 	fflush(stdin);
 	gets(u.dni);
-	printf("Introduzca el numero de tarjeta");
+	printf("Introduzca el numero de tarjeta \n");
 	fflush(stdout);
 	fflush(stdin);
-	scanf("%d",&u.numTarjeta);
+	scanf("%d",u.numTarjeta);
 	return u;
 
 }
@@ -30,7 +30,7 @@ void mostrarUsuario(Usuario u){
 	fflush(stdout);
 }
 
-int contrasenyaCorrecta(char * conU, char con){
+int contrasenyaCorrecta(char *conU, char *con){
 	int correcta = 0;
 	if(strcmp(conU, con) == 0){
 		correcta = 1;

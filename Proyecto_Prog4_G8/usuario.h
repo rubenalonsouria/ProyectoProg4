@@ -10,7 +10,7 @@ typedef struct usuario{
 
 Usuario conseguirUsuario();
 void mostrarUsuario();
-int contrasenyaCorrecta(char *conU, char con);
+int contrasenyaCorrecta(char *conU, char *con);
 
 
 #endif
