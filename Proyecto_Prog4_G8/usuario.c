@@ -17,10 +17,14 @@ Usuario conseguirUsuario(){
 	fflush(stdout);
 	fflush(stdin);
 	gets(u.dni);
-	printf("Introduzca el numero de tarjeta \n");
+	printf("Introduzca el numero de tarjeta:  \n");
 	fflush(stdout);
 	fflush(stdin);
 	scanf("%d",u.numTarjeta);
+	printf("Introduzca la contraseña: \n");
+	fflush(stdout);
+	fflush(stdin);
+	gets(u.contrasenya);
 	return u;
 
 }

@@ -8,6 +8,9 @@ int main(){
 	int pos;
 	char opcion,opcionU;
 
+	lu.numU = 0;
+	lu.aUsuarios = NULL;
+
 	do{
 		opcion = menuPrincipal();
 		switch(opcion){
