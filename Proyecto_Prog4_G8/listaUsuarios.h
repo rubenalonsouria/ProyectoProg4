@@ -9,7 +9,9 @@ typedef struct listaUsuarios{
 
 int buscarUsuario(ListaUsuarios lU, char *nom);
 void aniadirUsuario(ListaUsuarios *lU, Usuario u);
-
+void aniadirUsuario(ListaUsuarios *lu, Usuario u);
+void volcarListaUsuariosAFichero(ListaUsuarios lu, char *nomfich);
+void aniadirUsuarioAlFinalDelFichero(Usuario u, char *nomfich);
 
 
 #endif /* LISTAUSUARIOS_H_ */
