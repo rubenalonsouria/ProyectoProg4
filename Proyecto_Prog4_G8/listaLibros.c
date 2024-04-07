@@ -1,7 +1,7 @@
 #include "listaLibros.h"
 #include<stdio.h>
 
-void aniadirLibro(Libro l){
+void aniadirLibroaFichero(Libro l){
 	FILE *pf;
 	pf = fopen("Libros.txt","a");
 	if(pf != (FILE*)NULL){

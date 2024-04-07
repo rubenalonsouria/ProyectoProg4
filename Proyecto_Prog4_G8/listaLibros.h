@@ -2,6 +2,6 @@
 #define LISTALIBROS_H_
 #include "libro.h"
 
-void aniadirLibro(Libro l);
+void aniadirLibroaFichero(Libro l);
 
 #endif /* LISTALIBROS_H_ */
