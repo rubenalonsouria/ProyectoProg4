@@ -12,7 +12,7 @@ int main(){
 	ListaUsuarios lu;
 	Usuario u;
 	int pos;
-	char opcion,opcionU, din[8];
+	char opcion,opcionU, dni[8];
 	Libro l;
 
 	lu.numU = 0;
