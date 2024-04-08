@@ -75,7 +75,9 @@ int main(){
 				        			  	  	  	 break;
 				        			  case '2': break;
 				        			  case '3': break;
-				        			  case '4': break;
+				        			  case '4': u = conseguirUsuario();
+				    				  	  	  	pos = buscarUsuario(lu, u.nombre);
+				    				  	  	  	break;
 				        			  case '5': printf("Introduce el dni del alumno al eliminar: ");
 				        			  			  	  	  fflush(stdout);
 				        			  			  	  	  fflush(stdin);
