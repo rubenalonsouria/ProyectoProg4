@@ -11,7 +11,7 @@
 int main(){
 	ListaUsuarios lu;
 	Usuario u;
-	int pos;
+	int tam,pos;
 	char opcion,opcionU, dni[8];
 	Libro l;
 
@@ -76,7 +76,7 @@ int main(){
 				        			  case '2': break;
 				        			  case '3': break;
 				        			  case '4': u = conseguirUsuario();
-				    				  	  	  	pos = buscarUsuario(lu, u.nombre);
+				        			  	  	  	aniadirUsuario(&lu, u);
 				    				  	  	  	break;
 				        			  case '5': printf("Introduce el dni del alumno al eliminar: ");
 				        			  			  	  	  fflush(stdout);
