@@ -14,4 +14,6 @@ void volcarListaUsuariosAFichero(ListaUsuarios lu, char *nomfich);
 void aniadirUsuarioAlFinalDelFichero(Usuario u, char *nomfich);
 
 
+void eliminarUsuario(ListaUsuarios *lu, int pos);
+
 #endif /* LISTAUSUARIOS_H_ */

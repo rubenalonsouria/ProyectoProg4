@@ -12,7 +12,7 @@ int main(){
 	ListaUsuarios lu;
 	Usuario u;
 	int pos;
-	char opcion,opcionU;
+	char opcion,opcionU, din[8];
 	Libro l;
 
 	lu.numU = 0;
@@ -76,6 +76,21 @@ int main(){
 				        			  case '2': break;
 				        			  case '3': break;
 				        			  case '4': break;
+				        			  case '5': printf("Introduce el dni del alumno al eliminar: ");
+				        			  			  	  	  fflush(stdout);
+				        			  			  	  	  fflush(stdin);
+				        			  			  	  	  gets(u.dni);
+				        			  			  	  	  pos = buscarUsuario(lu, u.dni);
+				        			  			  	  	  if(pos == -1){
+				        			  			  	  		  printf("ERROR! Usuario no encontrado\n");
+				        			  			  	  		  fflush(stdout);
+				        			  			  	  	  }else{
+				        			  			  	  		  eliminarUsuario(&lu, pos);
+				        			  			  	  		  printf("Usuario eliminado correctamente\n");
+				        			  			  	  		  fflush(stdout);
+				        			  			  	  	  }
+				        			  				      break;
+				        			  case '6': break;
 				        			  default: printf("La opcion seleccionada no es correcta\n");
 				        			  }
 				        		  }while(opcionA!= '0');

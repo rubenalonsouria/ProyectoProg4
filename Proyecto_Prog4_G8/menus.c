@@ -34,6 +34,9 @@ char menuAdmin(){
 	printf("1) Aniadir libro\n");
 	printf("1) Eliminar libro\n");
 	printf("3) Buscar libro\n");
+	printf("4) Aniadir usuario\n");
+	printf("5) Eliminar usuario\n");
+	printf("6) Buscar usuario\n");
 	printf("0) Salir\n");
 	printf("Elige una opcion\n");
 	fflush(stdout);

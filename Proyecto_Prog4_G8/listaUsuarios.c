@@ -68,3 +68,11 @@ void aniadirUsuarioAlFinalDelFichero(Usuario u, char *nomfich){
 		fclose(pf);
 	}
 }
+
+void eliminarUsuario(ListaUsuarios *lu, int pos){
+	int i;
+	for(i=pos;i<lu->numU-1;i++){
+		lu->aUsuarios[i] = lu->aUsuarios[i+1];
+	}
+	lu->numU--;
+}
