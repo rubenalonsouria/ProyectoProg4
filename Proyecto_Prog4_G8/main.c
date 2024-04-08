@@ -4,8 +4,9 @@
 #include "menus.h"
 #include "listaLibros.h"
 #include "listaAdmin.h"
-#define NOMFICH "Usuarios.txt"
-#define NOMFICH "Admin.txt"
+#define NOMFICH1 "Usuarios.txt"
+#define NOMFICH2 "Admin.txt"
+#define NOMFICH3 "Libros.txt"
 
 int main(){
 	ListaUsuarios lu;
@@ -16,7 +17,7 @@ int main(){
 
 	lu.numU = 0;
 	lu.aUsuarios = NULL;
-	volcarFicheroAListaUsuarios(&lu, NOMFICH);
+	volcarFicheroAListaUsuarios(&lu, NOMFICH1);
 
 	ListaAdmin la;
 	Admin a;
@@ -25,7 +26,7 @@ int main(){
 
 	la.numA = 0;
 	la.aAdmin = NULL;
-	volcarFicheroAListaAdmin(&la, NOMFICH);
+	volcarFicheroAListaAdmin(&la, NOMFICH2);
 
 	do{
 		opcion = menuPrincipal();
@@ -92,7 +93,7 @@ int main(){
 				  }else{
 					  printf("Se ha registrado correctamente el usuario \n");
 					  aniadirUsuario(&lu, u);
-					  aniadirUsuarioAlFinalDelFichero(u,NOMFICH);
+					  aniadirUsuarioAlFinalDelFichero(u,NOMFICH1);
 				  }
 				  break;
 		default: printf("La opcion seleccionada no es correcta\n");fflush(stdout);
