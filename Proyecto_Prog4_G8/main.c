@@ -92,7 +92,12 @@ int main(){
 				        			  			  	  		  fflush(stdout);
 				        			  			  	  	  }
 				        			  				      break;
-				        			  case '6': break;
+				        			  case '6': printf("Introduce el dni del usuario que deseas buscar: ");
+    			  			  	  	  	  	    fflush(stdout);
+    			  			  	  	  	  	    fflush(stdin);
+    			  			  	  	  	  	    gets(u.dni);
+				        				  	    buscarUsuario (lu, dni);
+				        				  	  	break;
 				        			  default: printf("La opcion seleccionada no es correcta\n");
 				        			  }
 				        		  }while(opcionA!= '0');
