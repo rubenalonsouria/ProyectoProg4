@@ -10,6 +10,7 @@
 
 int main(){
 	ListaUsuarios lu;
+	ListaLibros lL;
 	Usuario u;
 	int tam,pos;
 	char opcion,opcionU, dni[8];
@@ -46,7 +47,20 @@ int main(){
 		        			  case '1':  l = conseguirLibro();
 		        			  	  	  	 aniadirLibroaFichero(l);
 		        			  	  	  	 break;
-		        			  case '2': break;
+		        			  case '2': printf("Introduzca el titulo del libro a devolver\n");
+		        			  	  fflush(stdout);
+		        			  	  fflush(stdin);
+		        			  	  scanf(l.titulo);
+		        			  	  pos = buscarLibro(lL, l.titulo);
+		        			  	  if(pos == -1 ){
+		        			  		  printf("No existe ese libro\n");
+		        			  		  fflush(stdout);
+		        			  	  }else{
+		        			  		  eliminarLibro(&lL, pos);
+		        			  		  printf("Libro devuelto\n");
+		        			  		  fflush(stdout);
+		        			  	  }
+		        			  	break;
 		        			  case '3': break;
 		        			  case '4': break;
 		        			  default: printf("La opcion seleccionada no es correcta\n");
@@ -78,7 +92,7 @@ int main(){
 				        			  case '4': u = conseguirUsuario();
 				        			  	  	  	aniadirUsuario(&lu, u);
 				    				  	  	  	break;
-				        			  case '5': printf("Introduce el dni del alumno al eliminar: ");
+				        			  case '5': printf("Introduce el dni del usuario a eliminar: ");
 				        			  			  	  	  fflush(stdout);
 				        			  			  	  	  fflush(stdin);
 				        			  			  	  	  gets(u.dni);
