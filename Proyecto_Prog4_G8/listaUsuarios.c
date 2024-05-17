@@ -19,10 +19,10 @@ void volcarFicheroAListaUsuarios(ListaUsuarios *lu, char *nomfich){
 	}
 }
 
-int buscarUsuario(ListaUsuarios lu, char *dni){
+int buscarUsuario(ListaUsuarios lu, char *nombre){
 	int pos=0,enc=0;
 	while(!enc && pos<lu.numU){
-		if(strcmp(lu.aUsuarios[pos].dni,dni)==0){
+		if(strcmp(lu.aUsuarios[pos].nombre,nombre)==0){
 			enc = 1;
 		}else{
 			pos++;

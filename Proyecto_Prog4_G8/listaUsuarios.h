@@ -13,7 +13,7 @@ void aniadirUsuario(ListaUsuarios *lU, Usuario u);
 void aniadirUsuario(ListaUsuarios *lu, Usuario u);
 void volcarListaUsuariosAFichero(ListaUsuarios lu, char *nomfich);
 void aniadirUsuarioAlFinalDelFichero(Usuario u, char *nomfich);
-
+void volcarFicheroAListaUsuarios(ListaUsuarios *lu, char *nomfich);
 
 void eliminarUsuario(ListaUsuarios *lu, int pos);
 
