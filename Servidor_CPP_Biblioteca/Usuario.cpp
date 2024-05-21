@@ -1,34 +1,41 @@
+/*
+ * Usuario.cpp
+ *
+ *  Created on: 17 may 2024
+ *      Author: Enrique
+ */
+
 #include "Usuario.h"
-
+#include <string.h>
 Usuario::Usuario() {
-    // Constructor predeterminado
+	// TODO Auto-generated constructor stub
+
 }
 
-Usuario::Usuario(const std::string& n, const std::string& a, const std::string& d, const std::string& nT, const std::string& c)
-    : nombre(n), apellido(a), dni(d), numTarjeta(nT), contrasenya(c) {
-    // Constructor que inicializa los atributos con los valores proporcionados
+Usuario::Usuario(char *n, char *a, char*d,char* nT,char*c){
+	strcpy(nombre,n);
+	strcpy(apellido,a);
+	strcpy(contrasenya,c);
+	strcpy(numTarjeta,nT);
+	strcpy(dni,d);
 }
 
-const std::string& Usuario::getDni() const {
-    return dni;
+char *Usuario::getDni() const{
+	return dni;
 }
-
-const std::string& Usuario::getNombre() const {
-    return nombre;
+char *Usuario::getNombre() const{
+	return nombre;
 }
-
-const std::string& Usuario::getApellido() const {
-    return apellido;
+char *Usuario::getApellido() const{
+	return  apellido;
 }
-
-const std::string& Usuario::getNumTarjeta() const {
-    return numTarjeta;
+char *Usuario::getNumTarjeta() const{
+	return numTarjeta;
 }
-
-const std::string& Usuario::getContrasenya() const {
-    return contrasenya;
+char *Usuario::getContrasenya() const{
+	return contrasenya;
 }
-
 Usuario::~Usuario() {
-    // Destructor
+	// TODO Auto-generated destructor stub
 }
+
