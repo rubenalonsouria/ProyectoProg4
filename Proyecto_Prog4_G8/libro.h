@@ -4,7 +4,7 @@ typedef struct libro{
 	char titulo[30];
 	char editorial[20];
 	char autor[20];
-	int isbn[13]; //cambiar a char
+	char isbn[13];
 }Libro;
 
 Libro conseguirLibro();
