@@ -1,28 +1,23 @@
-/*
- * Usuario.h
- *
- *  Created on: 17 may 2024
- *      Author: Enrique
- */
-
 #ifndef USUARIO_H_
 #define USUARIO_H_
 
+#include <string> // Incluir la biblioteca de std::string
+
 class Usuario {
-	char nombre[20];
-	char apellido[20];
-	char dni[8];
-	char numTarjeta[16];
-	char contrasenya[20];
+    std::string nombre;
+    std::string apellido;
+    std::string dni;
+    std::string numTarjeta;
+    std::string contrasenya;
 public:
-	Usuario();
-	Usuario(char *n, char *a, char*d,char *nT,char*c);
-	char *getDni() const;
-	char *getNombre() const;
-	char *getApellido() const;
-	char *getNumTarjeta() const;
-	char *getContrasenya() const;
-	virtual ~Usuario();
+    Usuario();
+    Usuario(const std::string& n, const std::string& a, const std::string& d, const std::string& nT, const std::string& c);
+    const std::string& getDni() const;
+    const std::string& getNombre() const;
+    const std::string& getApellido() const;
+    const std::string& getNumTarjeta() const;
+    const std::string& getContrasenya() const;
+    virtual ~Usuario();
 };
 
 #endif /* USUARIO_H_ */
