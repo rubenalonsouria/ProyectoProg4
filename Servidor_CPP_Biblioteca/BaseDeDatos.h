@@ -24,6 +24,7 @@ public:
     void insertarUsuario(const Usuario &u);
     int buscarUsuario(const char *nombre);
     void insertarLibro(const Libro &l);
+    int buscarLibro(const char *isbn);
     virtual ~BaseDeDatos();
 };
 

@@ -38,14 +38,20 @@ void BaseDeDatos::crearTablas() {
                  "numTarjeta VARCHAR(16), "
                  "contrasenya VARCHAR(20));");
 
-    sprintf(sql, "CREATE TABLE IF NOT EXISTS Libro ("
-                 "titulo VARCHAR(30), "
-                 "editorial VARCHAR(20), "
-                 "autor VARCHAR(20), "
-                 "isbm VARCHAR(13))");
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
     sqlite3_step(stmt);
     sqlite3_finalize(stmt);
+
+    sprintf(sql, "CREATE TABLE IF NOT EXISTS Libro ("
+                     "titulo VARCHAR(30), "
+                     "editorial VARCHAR(20), "
+                     "autor VARCHAR(20), "
+                     "isbm VARCHAR(13))");
+
+    sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+
 }
 
 void BaseDeDatos::insertarUsuario(const Usuario &u) {
@@ -75,12 +81,27 @@ int BaseDeDatos::buscarUsuario(const char *nombre) {
 
 void BaseDeDatos::insertarLibro(const Libro &l) {
     char sql[200];
-    sprintf(sql, "INSERT INTO Libro (titulo, editorial, autor, isbm) VALUES "
+    sprintf(sql, "INSERT INTO Libro (titulo, editorial, autor, isbn) VALUES "
                  "('%s', '%s', '%s', '%s')",
                  l.getTitulo(), l.getEditorial(), l.getAutor(), l.getIsbn());
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
     sqlite3_step(stmt);
     sqlite3_finalize(stmt);
+}
+
+int BaseDeDatos::buscarLibro(const char *isbn) {
+    int resultado;
+    char sql[200];
+    sprintf(sql, "SELECT * FROM Libro WHERE isbn='%s'", isbn);
+    sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    int result = sqlite3_step(stmt);
+    if (result == SQLITE_ROW) {
+        resultado = 1;
+    } else {
+        resultado = -1;
+    }
+    sqlite3_finalize(stmt);
+    return resultado;
 }
 
 BaseDeDatos::~BaseDeDatos() {

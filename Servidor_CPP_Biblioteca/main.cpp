@@ -118,7 +118,7 @@ int main(int argc, char *argv[]) {
 							recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 							sprintf(isbn, "%s", recvBuff);
 							Libro l(titulo, editorial, autor, isbn);
-							aniadirLibroaFichero(l); //Mejor añadir a la bbdd
+							aniadirLibroaFichero(l);         //Mejor añadir a la bbdd
 							break;
 						case '2':
 							recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
