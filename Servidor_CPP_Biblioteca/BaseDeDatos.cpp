@@ -37,6 +37,12 @@ void BaseDeDatos::crearTablas() {
                  "apellido VARCHAR(20), "
                  "numTarjeta VARCHAR(16), "
                  "contrasenya VARCHAR(20));");
+
+    sprintf(sql, "CREATE TABLE IF NOT EXISTS Libro ("
+                 "titulo VARCHAR(30), "
+                 "editorial VARCHAR(20), "
+                 "autor VARCHAR(20), "
+                 "isbm VARCHAR(13))");
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
     sqlite3_step(stmt);
     sqlite3_finalize(stmt);
@@ -65,6 +71,16 @@ int BaseDeDatos::buscarUsuario(const char *nombre) {
     }
     sqlite3_finalize(stmt);
     return resultado;
+}
+
+void BaseDeDatos::insertarLibro(const Libro &l) {
+    char sql[200];
+    sprintf(sql, "INSERT INTO Libro (titulo, editorial, autor, isbm) VALUES "
+                 "('%s', '%s', '%s', '%s')",
+                 l.getTitulo(), l.getEditorial(), l.getAutor(), l.getIsbn());
+    sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
 }
 
 BaseDeDatos::~BaseDeDatos() {

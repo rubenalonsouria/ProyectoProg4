@@ -9,6 +9,7 @@
 #define BASEDEDATOS_H_
 #include "sqlite3.h"
 #include "Usuario.h"
+#include "Libro.h"
 
 class BaseDeDatos {
     sqlite3 *db;
@@ -22,6 +23,7 @@ public:
     void crearTablas();
     void insertarUsuario(const Usuario &u);
     int buscarUsuario(const char *nombre);
+    void insertarLibro(const Libro &l);
     virtual ~BaseDeDatos();
 };
 
