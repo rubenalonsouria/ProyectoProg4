@@ -139,7 +139,6 @@ do {
 					printf("La opcion seleccionada no es correcta\n");
 				}
 			}while (opcionU != '0');
-		} else {
 			printf("La contraseña no es correcta\n");
 			fflush(stdout);
 		}
