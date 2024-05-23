@@ -104,6 +104,26 @@ int BaseDeDatos::buscarLibro(const char *isbn) {
     return resultado;
 }
 
+int BaseDeDatos::contrasenyaCorrecta(const std::string& nombre, const std::string& contrasenya){
+	char sql[256];
+	int correcta=0;
+	sprintf(sql,"SELECT contrasenya FROM usuarios WHERE nombre = '%s%'", nombre.c_str());
+	if(sqlite3_prepare_v2(db, sql, -1, &stmt, NULL)!=SQLITE_OK){
+		std::cerr << "Error preparando el statement: " << sqlite3_errmsg(db) << std::endl;
+		        return 0;
+	}
+	if (sqlite3_step(stmt) == SQLITE_ROW) {
+	        const unsigned char *dbContrasenya = sqlite3_column_text(stmt, 0);
+	        if (dbContrasenya && contrasenya == reinterpret_cast<const char*>(dbContrasenya)) {
+	            correcta = 1;
+	        }
+	    } else {
+	        std::cerr << "Error ejecutando el statement o usuario no encontrado: " << sqlite3_errmsg(db) << std::endl;
+	    }
+	sqlite3_finalize(stmt);
+
+	return correcta;
+}
 BaseDeDatos::~BaseDeDatos() {
     delete[] nomBD;
 }

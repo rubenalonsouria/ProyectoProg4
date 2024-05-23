@@ -111,6 +111,7 @@ int main(int argc, char *argv[]) {
 	char autor[20];
 	char isbn[13];
 	int pos;
+	int esCorrecta;
 	do {
 		recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 		sscanf(recvBuff, "%c", &opcion);
@@ -122,12 +123,12 @@ int main(int argc, char *argv[]) {
 			sprintf(contrasenya, "%s", recvBuff);
 			//pos = buscarUsuario(lu, nombre);
 			pos = bd.buscarUsuario(nombre);
+			esCorrecta = bd.contrasenyaCorrecta(nombre, contrasenya);
 			if (pos == -1) {
 				sprintf(sendBuff, "No existe este registro\n");
 				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 			} else {
-				if (contrasenyaCorrecta(lu.aUsuarios[pos].contrasenya,
-						contrasenya)) {
+				if (esCorrecta){
 					sprintf(sendBuff, "Bienvenido\n");
 					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 					do {
@@ -144,7 +145,8 @@ int main(int argc, char *argv[]) {
 							recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 							sprintf(isbn, "%s", recvBuff);
 							Libro l(titulo, editorial, autor, isbn);
-							aniadirLibroaFichero(l);    //Mejor añadir a la bbdd
+							//aniadirLibroaFichero(l);    //Mejor añadir a la bbdd
+							bd.insertarLibro(l);
 							break;
 						case '2':
 							recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
@@ -205,9 +207,9 @@ int main(int argc, char *argv[]) {
 				sprintf(sendBuff,
 						"Se ha registrado correctamente el usuario \n");
 				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
-				aniadirUsuario(&lu, usu);
+
 				bd.insertarUsuario(usu);
-				aniadirUsuarioAlFinalDelFichero(usu, NOMFICH1);
+
 			}
 			break;
 		}
