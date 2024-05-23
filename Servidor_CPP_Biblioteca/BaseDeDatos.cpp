@@ -1,10 +1,3 @@
-/*
- * BaseDeDatos.cpp
- *
- *  Created on: 21 may 2024
- *      Author: PORTATIL
- */
-
 #include "BaseDeDatos.h"
 #include <string.h>
 #include <iostream>
@@ -124,6 +117,24 @@ int BaseDeDatos::contrasenyaCorrecta(const std::string& nombre, const std::strin
 
 	return correcta;
 }
+
+void BaseDeDatos::eliminarLibro(const Libro& l){
+	char sql[256];
+	sprintf(sql,"DELETE FROM Libro WHERE isbn = '%s%'",l.getIsbn().c_str());
+	if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
+	        std::cerr << "Error preparando el statement: " << sqlite3_errmsg(db) << std::endl;
+	        return;
+	    }
+	if (sqlite3_step(stmt) != SQLITE_DONE) {
+	        std::cerr << "Error ejecutando el statement: " << sqlite3_errmsg(db) << std::endl;
+	    } else {
+	        std::cout << "Libro eliminado exitosamente." << std::endl;
+	    }
+	sqlite3_finalize(stmt);
+}
+/*Libro BaseDeDatos::obtenerDetallesDelLibro(const std::string& titulo){
+	return Libro();
+}*/
 BaseDeDatos::~BaseDeDatos() {
     delete[] nomBD;
 }

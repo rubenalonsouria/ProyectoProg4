@@ -112,6 +112,7 @@ int main(int argc, char *argv[]) {
 	char isbn[13];
 	int pos;
 	int esCorrecta;
+	Libro l;
 	do {
 		recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 		sscanf(recvBuff, "%c", &opcion);
@@ -144,33 +145,30 @@ int main(int argc, char *argv[]) {
 							sprintf(autor, "%s", recvBuff);
 							recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 							sprintf(isbn, "%s", recvBuff);
-							Libro l(titulo, editorial, autor, isbn);
+							l.setLibro(titulo, editorial, autor, isbn);
 							//aniadirLibroaFichero(l);    //Mejor añadir a la bbdd
 							bd.insertarLibro(l);
 							break;
 						case '2':
 							recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 							sprintf(titulo, "%s", recvBuff);
-							pos = buscarLibro(lL, titulo);
+							pos = bd.buscarLibro(titulo);
 							if (pos == -1) {
 								sprintf(sendBuff, "No existe ese libro\n");
-								send(comm_socket, sendBuff, sizeof(sendBuff),
-										0);
+								send(comm_socket, sendBuff, sizeof(sendBuff),0);
 
 							} else {
-								eliminarLibro(&lL, pos);
+								bd.eliminarLibro(l);
 								sprintf(sendBuff, "Libro devuelto\n");
-								send(comm_socket, sendBuff, sizeof(sendBuff),
-										0);
-
+								send(comm_socket, sendBuff, sizeof(sendBuff),0);
 							}
 							break;
 						case '3':
 							break;
 						case '4':
 							sprintf(sendBuff, "%s", titulo);
-							send(s, sendBuff, sizeof(sendBuff), 0);
-							pos = buscarLibro(lL, titulo);
+							send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+							pos = bd.buscarLibro(titulo);
 
 							break;
 						}

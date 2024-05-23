@@ -24,6 +24,13 @@ const std::string& Libro::getEditorial() const{
 const std::string& Libro::getIsbn() const{
 	return isbn;
 }
+
+void Libro::setLibro(const std::string& t, const std::string& a, const std::string& e, const std::string& i) {
+    titulo = t;
+    autor = a;
+    editorial = e;
+    isbn = i;
+}
 Libro::~Libro() {
 	// TODO Auto-generated destructor stub
 }

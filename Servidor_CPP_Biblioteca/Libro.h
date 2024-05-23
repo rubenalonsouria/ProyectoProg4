@@ -13,6 +13,7 @@ public:
 	const std:: string& getAutor()const;
 	const std:: string& getEditorial()const;
 	const std:: string& getIsbn()const;
+	void setLibro(const std::string& t, const std::string& a, const std::string& e, const std::string& i);
 	virtual ~Libro();
 };
 

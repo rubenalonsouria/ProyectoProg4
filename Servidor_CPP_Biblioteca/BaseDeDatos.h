@@ -26,6 +26,8 @@ public:
     void insertarLibro(const Libro &l);
     int buscarLibro(const char *isbn);
     int contrasenyaCorrecta(const std::string& nombre, const std::string& contrasenya);
+    void eliminarLibro(const Libro& l);
+    //Libro obtenerDetallesDelLibro(const std::string& titulo);
     virtual ~BaseDeDatos();
 };
 
