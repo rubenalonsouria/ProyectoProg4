@@ -31,6 +31,7 @@ public:
     int contrasenyaAdminCorrecta(const std::string& nombre, const std::string& contrasenya);
     int buscarAdmin(const char *nombre);
     void actualizarContrasenyaUsuario(const std::string& dni, const std::string& nuevaContrasenya);
+    void eliminarUsuario(const std::string& nombre);
     virtual ~BaseDeDatos();
 };
 

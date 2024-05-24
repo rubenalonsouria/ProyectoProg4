@@ -208,10 +208,39 @@ int main(int argc, char *argv[]) {
 
 							break;
 						case '4':
+							recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+										sprintf(dni, "%s", recvBuff);
 
+										recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+										sprintf(nombre, "%s", recvBuff);
+
+										recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+										sprintf(apellido, "%s", recvBuff);
+
+										recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+										sprintf(numTarjeta, "%s", recvBuff);
+
+										recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+										sprintf(contrasenya, "%s", recvBuff);
+										//Usuario usu(dni, nombre, apellido, numTarjeta, contrasenya);
+										u.setUsuario(nombre,apellido,dni,numTarjeta,contrasenya);
+										//pos = buscarUsuario(lu, nombre);
+										pos = bd.buscarUsuario(nombre);
+										if (pos != -1) {
+											sprintf(sendBuff, "Ese nombre de usuario ya existe\n");
+											send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+										} else {
+											sprintf(sendBuff,
+													"Se ha registrado correctamente el usuario \n");
+											send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+											bd.insertarUsuario(u);
+										}
 							break;
 						case '5':
-
+							recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+							sprintf(nombre,"%s",recvBuff);
+							bd.eliminarUsuario(nombre);
+							send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 							break;
 						case '6':
 

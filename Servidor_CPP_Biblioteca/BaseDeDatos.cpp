@@ -196,6 +196,25 @@ void BaseDeDatos::actualizarContrasenyaUsuario(const string& dni, const string& 
     }
 }
 
+void BaseDeDatos::eliminarUsuario(const std::string& nombre){
+	char sql[256];
+	sprintf(sql, "DELETE FROM Usuario WHERE nombre = '%s%'",nombre);
+
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
+        std::cerr << "Error preparando el statement: " << sqlite3_errmsg(db) << std::endl;
+        return;
+    }
+
+    if (sqlite3_step(stmt) != SQLITE_DONE) {
+        std::cerr << "Error ejecutando el statement: " << sqlite3_errmsg(db) << std::endl;
+    } else {
+        std::cout << "Usuario eliminado exitosamente." << std::endl;
+    }
+
+    sqlite3_finalize(stmt);
+}
+
 BaseDeDatos::~BaseDeDatos() {
     delete[] nomBD;
 }
