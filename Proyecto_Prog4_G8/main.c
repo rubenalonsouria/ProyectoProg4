@@ -277,16 +277,32 @@ do {
 
 			break;
 		case '4':  // Nueva opción para "Has olvidado tu contraseña"
-            printf("Introduce tu dni: ");
+				printf("Introduce tu dni: ");
 
-            scanf("%s", dni);
-            sprintf(sendBuff, "Contrasenya olvidada");
-            send(s, sendBuff, sizeof(sendBuff), 0);
-            sprintf(sendBuff, "%s", dni);
-            send(s, sendBuff, sizeof(sendBuff), 0);
-            recv(s, recvBuff, sizeof(recvBuff), 0);
-            printf("%s\n", recvBuff);
+			    scanf("%s", dni);
+			    sprintf(sendBuff, "Contrasenya olvidada");
+			    send(s, sendBuff, sizeof(sendBuff), 0);
+			    sprintf(sendBuff, "%s", dni);
+			    send(s, sendBuff, sizeof(sendBuff), 0);
+			    recv(s, recvBuff, sizeof(recvBuff), 0);
+			    printf("%s\n", recvBuff);
 
+			    // Recibir mensaje del servidor para pedir una nueva contraseña
+			    recv(s, recvBuff, sizeof(recvBuff), 0);
+			    printf("%s", recvBuff);
+
+			    // Pedir al usuario una nueva contraseña
+			    char nuevaContrasenya[20];
+			    printf("Introduce tu nueva contraseña: ");
+			    scanf("%s", nuevaContrasenya);
+
+			    // Enviar la nueva contraseña al servidor
+			    sprintf(sendBuff, "%s", nuevaContrasenya);
+			    send(s, sendBuff, sizeof(sendBuff), 0);
+
+			    // Recibir mensaje de confirmación del servidor
+			    recv(s, recvBuff, sizeof(recvBuff), 0);
+			    printf("%s\n", recvBuff);
 			break;
 			default:
 			printf("La opcion seleccionada no es correcta\n");
