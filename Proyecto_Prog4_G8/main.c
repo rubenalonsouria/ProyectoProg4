@@ -276,6 +276,18 @@ do {
 			printf("%s",recvBuff);
 
 			break;
+		case '4':  // Nueva opción para "Has olvidado tu contraseña"
+            printf("Introduce tu dni: ");
+
+            scanf("%s", dni);
+            sprintf(sendBuff, "Contrasenya olvidada");
+            send(s, sendBuff, sizeof(sendBuff), 0);
+            sprintf(sendBuff, "%s", dni);
+            send(s, sendBuff, sizeof(sendBuff), 0);
+            recv(s, recvBuff, sizeof(recvBuff), 0);
+            printf("%s\n", recvBuff);
+
+			break;
 			default:
 			printf("La opcion seleccionada no es correcta\n");
 			fflush(stdout);
