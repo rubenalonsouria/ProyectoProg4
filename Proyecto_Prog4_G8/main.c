@@ -64,7 +64,7 @@ int main() {
 	ListaAdmin la;
 	Admin a;
 	int posA;
-	char opcionAd, opcionA;
+	char opcionA;
 
 	la.numA = 0;
 	la.aAdmin = NULL;
@@ -114,8 +114,7 @@ do {
 					//aniadirLibroaFichero(l);  Esto al servidor
 					break;
 					case '2':
-					printf(
-							"Introduzca el titulo del libro a devolver\n");
+					printf("Introduzca el titulo del libro a devolver\n");
 					fflush(stdout);
 					fflush(stdin);
 					scanf(l.titulo);
@@ -139,14 +138,63 @@ do {
 					printf("La opcion seleccionada no es correcta\n");
 				}
 			}while (opcionU != '0');
-			printf("La contraseña no es correcta\n");
+			printf("La opcion seleccionada no es correcta\n");
 			fflush(stdout);
 		}
 
 		break;
 
 		case '2':
-		a = conseguirAdmin();
+			a = conseguirAdmin();
+			sprintf(sendBuff,"%s",a.nombre);
+			send(s,sendBuff,sizeof(sendBuff),0);
+			sprintf(sendBuff,"%s",a.contrasenya);
+			send(s,sendBuff,sizeof(sendBuff),0);
+
+			recv(s,recvBuff,sizeof(recvBuff),0);
+			if(strcmp(recvBuff,"No existe este registro\n")==0) {
+				printf("%s",recvBuff);
+			} else {
+				printf("%s",recvBuff);
+				do {
+					opcionA = menuAdmin();
+					sprintf(sendBuff,"%c",opcionU);
+					send(s,sendBuff,sizeof(sendBuff),0);
+
+					switch (opcionA) {
+						case '0':
+						printf("Volviendo al menu principal\n");
+						fflush(stdout);
+						break;
+						case '1':
+						break;
+
+						case '2':
+						break;
+
+						case '3':
+						break;
+
+						case '4':
+						break;
+
+						case '5':
+						break;
+
+						case '6':
+						break;
+
+						default:
+						printf("La opcion seleccionada no es correcta\n");
+
+					}
+				}while (opcionA != '0');
+				printf("La opcion seleccionada no es correcta\n");
+				fflush(stdout);
+			}
+			break;
+
+/*		a = conseguirAdmin();
 		posA = buscarAdmin(la, a.nombre);
 		if (posA == -1) {
 			printf("No existe este registro\n");
@@ -207,7 +255,7 @@ do {
 			}
 		}
 		break;
-
+*/
 		case '3':
 			u = conseguirUsuario();
 			sprintf(sendBuff,"%s",u.dni);

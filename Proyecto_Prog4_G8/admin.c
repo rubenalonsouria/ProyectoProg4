@@ -20,7 +20,7 @@ Admin conseguirAdmin(){
 	printf("Introduzca el numero de tarjeta:  \n");
 	fflush(stdout);
 	fflush(stdin);
-	scanf("%d",a.numTarjeta);
+	scanf("%s",a.numTarjeta);
 	printf("Introduzca la contraseña: \n");
 	fflush(stdout);
 	fflush(stdin);
@@ -30,7 +30,7 @@ Admin conseguirAdmin(){
 }
 
 void mostrarAdmin(Admin a){
-	printf("%10s%10s%10d", a.nombre, a.apellido,a.dni);
+	printf("%10s%10s%10s", a.nombre, a.apellido,a.dni);
 	fflush(stdout);
 }
 
