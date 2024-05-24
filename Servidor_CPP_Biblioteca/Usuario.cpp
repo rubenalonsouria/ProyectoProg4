@@ -29,6 +29,13 @@ const std::string& Usuario::getContrasenya() const {
     return contrasenya;
 }
 
+void Usuario::setUsuario(const std::string& n,const std::string& a,const std::string& d,const std::string& nT,const std::string& c){
+	nombre = n;
+	apellido = a;
+	dni = d;
+	numTarjeta = nT;
+	contrasenya = c;
+}
 Usuario::~Usuario() {
     // Destructor
 }

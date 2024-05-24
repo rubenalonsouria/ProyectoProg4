@@ -113,6 +113,7 @@ int main(int argc, char *argv[]) {
 	int pos;
 	int esCorrecta;
 	Libro l;
+	Usuario u;
 	do {
 		recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 		sscanf(recvBuff, "%c", &opcion);
@@ -146,7 +147,7 @@ int main(int argc, char *argv[]) {
 							recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 							sprintf(isbn, "%s", recvBuff);
 							l.setLibro(titulo, editorial, autor, isbn);
-							//aniadirLibroaFichero(l);    //Mejor añadir a la bbdd
+							//aniadirLibroaFichero(l);
 							bd.insertarLibro(l);
 							break;
 						case '2':
@@ -236,8 +237,8 @@ int main(int argc, char *argv[]) {
 
 			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
 			sprintf(contrasenya, "%s", recvBuff);
-			Usuario usu(dni, nombre, apellido, numTarjeta, contrasenya);
-
+			//Usuario usu(dni, nombre, apellido, numTarjeta, contrasenya);
+			u.setUsuario(nombre,apellido,dni,numTarjeta,contrasenya);
 			//pos = buscarUsuario(lu, nombre);
 			pos = bd.buscarUsuario(nombre);
 			if (pos != -1) {
@@ -248,7 +249,7 @@ int main(int argc, char *argv[]) {
 						"Se ha registrado correctamente el usuario \n");
 				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
 
-				bd.insertarUsuario(usu);
+				bd.insertarUsuario(u);
 
 			}
 			break;

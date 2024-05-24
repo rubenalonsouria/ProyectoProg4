@@ -17,6 +17,7 @@ public:
     const std::string& getApellido() const;
     const std::string& getNumTarjeta() const;
     const std::string& getContrasenya() const;
+    void setUsuario(const std::string& nombre,const std::string& apellido,const std::string& dni,const std::string& numTarjeta,const std::string& contrasenya);
     virtual ~Usuario();
 };
 
