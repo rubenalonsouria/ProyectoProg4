@@ -30,6 +30,7 @@ public:
     //Libro obtenerDetallesDelLibro(const std::string& titulo);
     int contrasenyaAdminCorrecta(const std::string& nombre, const std::string& contrasenya);
     int buscarAdmin(const char *nombre);
+    void actualizarContrasenyaUsuario(const std::string& dni, const std::string& nuevaContrasenya);
     virtual ~BaseDeDatos();
 };
 

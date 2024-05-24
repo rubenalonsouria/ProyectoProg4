@@ -182,6 +182,20 @@ void BaseDeDatos::eliminarLibro(const Libro& l){
 /*Libro BaseDeDatos::obtenerDetallesDelLibro(const std::string& titulo){
 	return Libro();
 }*/
+
+void BaseDeDatos::actualizarContrasenyaUsuario(const string& dni, const string& nuevaContrasenya) {
+
+    char* errorMessage;
+    string sql = "UPDATE Usuarios SET contrasenya = '" + nuevaContrasenya + "' WHERE dni = '" + string(dni) + "';";
+    int result = sqlite3_exec(db, sql.c_str(), NULL, 0, &errorMessage);
+    if (result != SQLITE_OK) {
+        cerr << "Error actualizando contraseña: " << errorMessage << endl;
+        sqlite3_free(errorMessage);
+    } else {
+        cout << "Contraseña actualizada correctamente." << endl;
+    }
+}
+
 BaseDeDatos::~BaseDeDatos() {
     delete[] nomBD;
 }

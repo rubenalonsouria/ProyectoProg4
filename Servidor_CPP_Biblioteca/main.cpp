@@ -252,6 +252,30 @@ int main(int argc, char *argv[]) {
 
 			}
 			break;
+		case '4':
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			    if (strcmp(recvBuff, "Contrasenya olvidada") == 0) {
+			        recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			        sprintf(dni, "%s", recvBuff);
+
+			        printf("Solicitud de recuperación de contraseña por el dni: %s\n", dni);
+
+			        // Enviar mensaje al cliente para pedir una nueva contraseña
+			        sprintf(sendBuff, "Introduce tu nueva contraseña: ");
+			        send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+
+			        // Recibir la nueva contraseña del cliente
+			        recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			        string nuevaContrasenya = recvBuff;
+
+			        // Actualizar la contraseña en la base de datos
+			        bd.actualizarContrasenyaUsuario(dni, nuevaContrasenya);
+
+			        // Enviar mensaje de confirmación al cliente
+			        sprintf(sendBuff, "Contraseña actualizada correctamente.\n");
+			        send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+            }
+			break;
 		}
 
 	} while (opcion != '0');
