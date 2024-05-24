@@ -104,7 +104,7 @@ int main(int argc, char *argv[]) {
 	//BaseDeDatos bd("LibreriaDeusto.db");
 	BaseDeDatos bd(nombre_bd);
 	bd.conectar();
-	char opcion, opcionU, nombre[20], contrasenya[20], dni[8], numTarjeta[16],
+	char opcion, opcionU, opcionA, opcionAd, nombre[20], contrasenya[20], dni[8], numTarjeta[16],
 			apellido[20];
 	char titulo[30];
 	char editorial[20];
@@ -178,6 +178,48 @@ int main(int argc, char *argv[]) {
 			}
 			break;
 		case '2':
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			sprintf(nombre, "%s", recvBuff);
+			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+			sprintf(contrasenya, "%s", recvBuff);
+			//pos = buscarUsuario(lu, nombre);
+			pos = bd.buscarAdmin(nombre);
+			esCorrecta = bd.contrasenyaAdminCorrecta(nombre, contrasenya);
+
+			if (pos == -1) {
+				sprintf(sendBuff, "No existe este registro\n");
+				send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+			} else {
+				if (esCorrecta){
+					sprintf(sendBuff, "Bienvenido\n");
+					send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+					do {
+						recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+						sscanf(recvBuff, "%c", &opcionA);
+						switch (opcionA) {
+						case '1':
+
+							break;
+						case '2':
+
+							break;
+						case '3':
+
+							break;
+						case '4':
+
+							break;
+						case '5':
+
+							break;
+						case '6':
+
+							break;
+						}
+
+					} while (opcionA != '0');
+				}
+			}
 			break;
 		case '3':
 			recv(comm_socket, recvBuff, sizeof(recvBuff), 0);

@@ -45,6 +45,17 @@ void BaseDeDatos::crearTablas() {
     sqlite3_step(stmt);
     sqlite3_finalize(stmt);
 
+    sprintf(sql, "CREATE TABLE IF NOT EXISTS Admin ("
+                         "dni VARCHAR(10), "
+                         "nombre VARCHAR(20), "
+                         "apellido VARCHAR(20), "
+                         "numTarjeta VARCHAR(16),"
+                         "congrasenya VARCHAR(16))");
+
+        sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+        sqlite3_step(stmt);
+        sqlite3_finalize(stmt);
+
 }
 
 void BaseDeDatos::insertarUsuario(const Usuario &u) {
@@ -61,6 +72,21 @@ int BaseDeDatos::buscarUsuario(const char *nombre) {
     int resultado;
     char sql[200];
     sprintf(sql, "SELECT * FROM Usuario WHERE nombre='%s'", nombre);
+    sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+    int result = sqlite3_step(stmt);
+    if (result == SQLITE_ROW) {
+        resultado = 1;
+    } else {
+        resultado = -1;
+    }
+    sqlite3_finalize(stmt);
+    return resultado;
+}
+
+int BaseDeDatos::buscarAdmin(const char *nombre) {
+    int resultado;
+    char sql[200];
+    sprintf(sql, "SELECT * FROM Admin WHERE nombre='%s'", nombre);
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
     int result = sqlite3_step(stmt);
     if (result == SQLITE_ROW) {
@@ -101,6 +127,27 @@ int BaseDeDatos::contrasenyaCorrecta(const std::string& nombre, const std::strin
 	char sql[256];
 	int correcta=0;
 	sprintf(sql,"SELECT contrasenya FROM usuarios WHERE nombre = '%s%'", nombre.c_str());
+	if(sqlite3_prepare_v2(db, sql, -1, &stmt, NULL)!=SQLITE_OK){
+		std::cerr << "Error preparando el statement: " << sqlite3_errmsg(db) << std::endl;
+		        return 0;
+	}
+	if (sqlite3_step(stmt) == SQLITE_ROW) {
+	        const unsigned char *dbContrasenya = sqlite3_column_text(stmt, 0);
+	        if (dbContrasenya && contrasenya == reinterpret_cast<const char*>(dbContrasenya)) {
+	            correcta = 1;
+	        }
+	    } else {
+	        std::cerr << "Error ejecutando el statement o usuario no encontrado: " << sqlite3_errmsg(db) << std::endl;
+	    }
+	sqlite3_finalize(stmt);
+
+	return correcta;
+}
+
+int BaseDeDatos::contrasenyaAdminCorrecta(const std::string& nombre, const std::string& contrasenya){
+	char sql[256];
+	int correcta=0;
+	sprintf(sql,"SELECT contrasenya FROM Admin WHERE nombre = '%s%'", nombre.c_str());
 	if(sqlite3_prepare_v2(db, sql, -1, &stmt, NULL)!=SQLITE_OK){
 		std::cerr << "Error preparando el statement: " << sqlite3_errmsg(db) << std::endl;
 		        return 0;
