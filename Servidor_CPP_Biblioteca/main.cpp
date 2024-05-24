@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <winsock2.h>
 #include "BaseDeDatos.h"
+#include <winsock2.h>
 #include "Usuario.h"
 #include "Libro.h"
 #include <fstream>
