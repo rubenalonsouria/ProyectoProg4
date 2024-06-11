@@ -18,6 +18,7 @@ public:
     void crearTablas();
     void insertarUsuario(const Usuario &u);
     int buscarUsuario(const char *nombre);
+    Usuario* obtenerUsuario(const char *dni);
     int buscarDni(const char *dni);   // Añadir declaración
     std::string getContrasenya(const char *dni);  // Añadir declaración
     void insertarLibro(const Libro &l);

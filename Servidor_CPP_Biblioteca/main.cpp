@@ -120,7 +120,7 @@ void manejarCliente(SOCKET comm_socket, BaseDeDatos &bd) {
                 esCorrecta = bd.contrasenyaAdminCorrecta(nombre, contrasenya);
 
                 if (pos == -1) {
-                    sprintf(sendBuff, "No existe este registro\n");
+                    sprintf(sendBuff, "No existe este registro");
                 } else if (esCorrecta) {
                     sprintf(sendBuff, "Bienvenido\n");
                     send(comm_socket, sendBuff, sizeof(sendBuff), 0);
@@ -131,15 +131,15 @@ void manejarCliente(SOCKET comm_socket, BaseDeDatos &bd) {
                         switch (opcionA) {
                             case '4':
                                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                                sscanf(recvBuff, "%s", dni);
+                                sprintf(dni, "%s", recvBuff);
                                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                                sscanf(recvBuff, "%s", nombre);
+                                sprintf(nombre, "%s", recvBuff);
                                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                                sscanf(recvBuff, "%s", apellido);
+                                sprintf(apellido, "%s", recvBuff );
                                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                                sscanf(recvBuff, "%s", numTarjeta);
+                                sprintf(numTarjeta, "%s", recvBuff );
                                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                                sscanf(recvBuff, "%s", contrasenya);
+                                sprintf(contrasenya, "%s", recvBuff );
                                 u.setUsuario(nombre, apellido, dni, numTarjeta, contrasenya);
                                 pos = bd.buscarUsuario(nombre);
                                 if (pos != -1) {
@@ -153,15 +153,35 @@ void manejarCliente(SOCKET comm_socket, BaseDeDatos &bd) {
 
                             case '5':
                                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                                sscanf(recvBuff, "%s", nombre);
-                                bd.eliminarUsuario(nombre);
+                                sprintf(dni, "%s", recvBuff);
+                                bd.eliminarUsuario(dni);
                                 sprintf(sendBuff, "Usuario eliminado\n");
                                 send(comm_socket, sendBuff, sizeof(sendBuff), 0);
                                 break;
-
+                            case '6':
+                            	char d[10];
+                            	recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
+                            	sprintf(d, "%s", recvBuff);
+                            	pos = bd.buscarUsuario(d);
+                            	if(pos==-1){
+                            		sprintf(sendBuff,"Usuario no encontrado\n");
+                            	}else{
+                            		Usuario *u = bd.obtenerUsuario(d);
+                            		sprintf(sendBuff,"%s",u->getDni());
+                            		send(comm_socket,sendBuff,sizeof(sendBuff),0);
+                            		sprintf(sendBuff,"%s",u->getNombre());
+                            		send(comm_socket,sendBuff,sizeof(sendBuff),0);
+                            		sprintf(sendBuff,"%s",u->getApellido());
+                            		send(comm_socket,sendBuff,sizeof(sendBuff),0);
+                            		sprintf(sendBuff,"%s",u->getNumTarjeta());
+                            		send(comm_socket,sendBuff,sizeof(sendBuff),0);
+                            		sprintf(sendBuff,"%s",u->getContrasenya());
+                            		send(comm_socket,sendBuff,sizeof(sendBuff),0);
+                            	}
                             default:
                                 sprintf(sendBuff, "Opción incorrecta\n");
                                 send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+
                                 break;
                         }
                     } while (opcionA != '0');
@@ -173,15 +193,16 @@ void manejarCliente(SOCKET comm_socket, BaseDeDatos &bd) {
 
             case '3':
                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                sscanf(recvBuff, "%s", dni);
+                sprintf(dni, "%s", recvBuff);
                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                sscanf(recvBuff, "%s", nombre);
+                sprintf(nombre, "%s", recvBuff);
                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                sscanf(recvBuff, "%s", apellido);
+                sprintf(apellido, "%s", recvBuff);
                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                sscanf(recvBuff, "%s", numTarjeta);
+                sprintf(numTarjeta, "%s", recvBuff);
                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                sscanf(recvBuff, "%s", contrasenya);
+                sprintf(contrasenya, "%s", recvBuff);
+
                 u.setUsuario(nombre, apellido, dni, numTarjeta, contrasenya);
                 pos = bd.buscarUsuario(nombre);
                 if (pos != -1) {

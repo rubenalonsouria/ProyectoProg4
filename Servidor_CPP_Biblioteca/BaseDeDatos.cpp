@@ -67,10 +67,10 @@ void BaseDeDatos::insertarUsuario(const Usuario &u) {
     sqlite3_finalize(stmt);
 }
 
-int BaseDeDatos::buscarUsuario(const char *nombre) {
+int BaseDeDatos::buscarUsuario(const char *dni) {
     int resultado;
     char sql[200];
-    sprintf(sql, "SELECT * FROM Usuario WHERE nombre='%s';", nombre);
+    sprintf(sql, "SELECT * FROM Usuario WHERE dni='%s';", dni);
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
     int result = sqlite3_step(stmt);
     if (result == SQLITE_ROW) {
@@ -81,6 +81,29 @@ int BaseDeDatos::buscarUsuario(const char *nombre) {
     sqlite3_finalize(stmt);
     return resultado;
 }
+
+Usuario* BaseDeDatos::obtenerUsuario(const char *dni){
+	int resultado;
+	char sql[200];
+	sprintf(sql, "SELECT * FROM Usuario WHERE dni='%s';", dni);
+	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
+	int result = sqlite3_step(stmt);
+	if (result == SQLITE_ROW) {
+		char *nom = (char*)sqlite3_column_text(stmt,1);
+		char *ape = (char*)sqlite3_column_text(stmt,2);
+		char *numT = (char*)sqlite3_column_text(stmt,3);
+		char *cont = (char*)sqlite3_column_text(stmt,4);
+		Usuario *u = new Usuario(dni,nom,ape,numT,cont);
+		sqlite3_finalize(stmt);
+
+		return u;
+	}else{
+		return NULL;
+	}
+
+}
+
+
 
 int BaseDeDatos::buscarDni(const char *dni) {
     int resultado;
@@ -218,9 +241,9 @@ void BaseDeDatos::actualizarContrasenyaUsuario(const std::string& dni, const std
     sqlite3_finalize(stmt);
 }
 
-void BaseDeDatos::eliminarUsuario(const std::string& nombre) {
+void BaseDeDatos::eliminarUsuario(const std::string& dni) {
     char sql[256];
-    sprintf(sql, "DELETE FROM Usuario WHERE nombre='%s';", nombre.c_str());
+    sprintf(sql, "DELETE FROM Usuario WHERE dni='%s';", dni.c_str());
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
         std::cerr << "Error preparando el statement: " << sqlite3_errmsg(db) << std::endl;
         return;
