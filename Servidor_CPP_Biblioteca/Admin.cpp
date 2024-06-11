@@ -4,28 +4,28 @@ Admin::Admin() {
 
 }
 
-Admin::Admin(const std::string& n,const std::string& a, const std::string& d, const std::string& nt, const std::string& c)
+Admin::Admin(const char& n,const char& a, const char& d, const char& nt, const char& c)
 : nombre(n), apellido(a), dni(d), numTarjeta(nt), contrasenya(c) {
 
 }
 
-const std::string& Admin::getNombre() const{
+const char& Admin::getNombre() const{
 	return nombre;
 }
 
-const std::string& Admin::getApellido() const{
+const char& Admin::getApellido() const{
 	return apellido;
 }
 
-const std::string& Admin::getDni() const{
+const char& Admin::getDni() const{
 	return dni;
 }
 
-const std::string& Admin::getNumTarjeta() const{
+const char& Admin::getNumTarjeta() const{
 	return numTarjeta;
 }
 
-const std::string& Admin::getContrasenya() const{
+const char& Admin::getContrasenya() const{
 	return contrasenya;
 }
 

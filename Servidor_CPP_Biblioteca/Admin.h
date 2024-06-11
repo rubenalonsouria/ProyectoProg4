@@ -2,19 +2,19 @@
 #define ADMIN_H_
 #include <string>
 class Admin {
-	std:: string nombre;
-	std:: string apellido;
-	std:: string dni;
-	std:: string numTarjeta;
-	std:: string contrasenya;
+	char nombre;
+	char apellido;
+	char dni;
+	char numTarjeta;
+	char contrasenya;
 public:
 	Admin();
-	Admin(const std::string& n, const std::string& a, const std::string& d, const std::string& nt, const std::string& c);
-	const std:: string& getNombre()const;
-	const std:: string& getApellido()const;
-	const std:: string& getDni()const;
-	const std:: string& getNumTarjeta()const;
-	const std:: string& getContrasenya()const;
+	Admin(const char& n, const char& a, const char& d, const char& nt, const char& c);
+	const char& getNombre()const;
+	const char& getApellido()const;
+	const char& getDni()const;
+	const char& getNumTarjeta()const;
+	const char& getContrasenya()const;
 	virtual ~Admin();
 };
 

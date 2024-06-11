@@ -120,8 +120,8 @@ int BaseDeDatos::buscarDni(const char *dni) {
     return resultado;
 }
 
-std::string BaseDeDatos::getContrasenya(const char *dni) {
-    std::string contrasenya;
+char BaseDeDatos::getContrasenya(const char *dni) {
+    char contrasenya;
     char sql[200];
     sprintf(sql, "SELECT contrasenya FROM Usuario WHERE dni='%s';", dni);
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
@@ -160,7 +160,7 @@ int BaseDeDatos::buscarLibro(const char *isbn) {
     return resultado;
 }
 
-int BaseDeDatos::contrasenyaCorrecta(const std::string& nombre, const std::string& contrasenya) {
+int BaseDeDatos::contrasenyaCorrecta(const char& nombre, const char& contrasenya) {
     char sql[256];
     int correcta = 0;
     sprintf(sql, "SELECT contrasenya FROM Usuario WHERE nombre='%s';", nombre.c_str());
@@ -193,7 +193,7 @@ void BaseDeDatos::eliminarLibro(const Libro& l) {
     sqlite3_finalize(stmt);
 }
 
-int BaseDeDatos::contrasenyaAdminCorrecta(const std::string& nombre, const std::string& contrasenya) {
+int BaseDeDatos::contrasenyaAdminCorrecta(const char& nombre, const char& contrasenya) {
     char sql[256];
     int correcta = 0;
     sprintf(sql, "SELECT contrasenya FROM Admin WHERE nombre='%s';", nombre.c_str());
@@ -228,7 +228,7 @@ int BaseDeDatos::buscarAdmin(const char *nombre) {
     return resultado;
 }
 
-void BaseDeDatos::actualizarContrasenyaUsuario(const std::string& dni, const std::string& nuevaContrasenya) {
+void BaseDeDatos::actualizarContrasenyaUsuario(const char& dni, const char& nuevaContrasenya) {
     char sql[256];
     sprintf(sql, "UPDATE Usuario SET contrasenya='%s' WHERE dni='%s';", nuevaContrasenya.c_str(), dni.c_str());
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
@@ -241,7 +241,7 @@ void BaseDeDatos::actualizarContrasenyaUsuario(const std::string& dni, const std
     sqlite3_finalize(stmt);
 }
 
-void BaseDeDatos::eliminarUsuario(const std::string& dni) {
+void BaseDeDatos::eliminarUsuario(const char& dni) {
     char sql[256];
     sprintf(sql, "DELETE FROM Usuario WHERE dni='%s';", dni.c_str());
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {

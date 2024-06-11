@@ -4,28 +4,28 @@ Libro::Libro() {
 
 }
 
-Libro::Libro(const std::string& t,const std::string& a, const std::string& e, const std::string& i)
+Libro::Libro(const char& t,const char& a, const char& e, const char& i)
 : titulo(t), autor(a), editorial(e), isbn(i) {
 
 }
 
-const std::string& Libro::getTitulo() const{
+const char& Libro::getTitulo() const{
 	return titulo;
 }
 
-const std::string& Libro::getAutor() const{
+const char& Libro::getAutor() const{
 	return autor;
 }
 
-const std::string& Libro::getEditorial() const{
+const char& Libro::getEditorial() const{
 	return editorial;
 }
 
-const std::string& Libro::getIsbn() const{
+const char& Libro::getIsbn() const{
 	return isbn;
 }
 
-void Libro::setLibro(const std::string& t, const std::string& a, const std::string& e, const std::string& i) {
+void Libro::setLibro(const char& t, const char& a, const char& e, const char& i) {
     titulo = t;
     autor = a;
     editorial = e;

@@ -2,18 +2,18 @@
 #define LIBRO_H_
 #include <string>
 class Libro {
-	std:: string titulo;
-	std:: string autor;
-	std:: string editorial;
-	std:: string isbn;
+	char titulo;
+	char autor;
+	char editorial;
+	char isbn;
 public:
 	Libro();
-	Libro(const std::string& t, const std::string& a, const std::string& e, const std::string& i);
-	const std:: string& getTitulo()const;
-	const std:: string& getAutor()const;
-	const std:: string& getEditorial()const;
-	const std:: string& getIsbn()const;
-	void setLibro(const std::string& t, const std::string& a, const std::string& e, const std::string& i);
+	Libro(const char& t, const char& a, const char& e, const char& i);
+	const char& getTitulo()const;
+	const char& getAutor()const;
+	const char& getEditorial()const;
+	const char& getIsbn()const;
+	void setLibro(const char& t, const char& a, const char& e, const char& i);
 	virtual ~Libro();
 };
 

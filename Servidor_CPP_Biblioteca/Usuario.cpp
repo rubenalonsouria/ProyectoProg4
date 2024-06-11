@@ -4,32 +4,32 @@ Usuario::Usuario() {
     // Constructor predeterminado
 }
 
-Usuario::Usuario(const std::string& n, const std::string& a, const std::string& d, const std::string& nT, const std::string& c)
+Usuario::Usuario(const char& n, const char& a, const char& d, const char& nT, const char& c)
     : nombre(n), apellido(a), dni(d), numTarjeta(nT), contrasenya(c) {
     // Constructor que inicializa los atributos con los valores proporcionados
 }
 
-const std::string& Usuario::getDni() const {
+const char& Usuario::getDni() const {
     return dni;
 }
 
-const std::string& Usuario::getNombre() const {
+const char& Usuario::getNombre() const {
     return nombre;
 }
 
-const std::string& Usuario::getApellido() const {
+const char& Usuario::getApellido() const {
     return apellido;
 }
 
-const std::string& Usuario::getNumTarjeta() const {
+const char& Usuario::getNumTarjeta() const {
     return numTarjeta;
 }
 
-const std::string& Usuario::getContrasenya() const {
+const char& Usuario::getContrasenya() const {
     return contrasenya;
 }
 
-void Usuario::setUsuario(const std::string& n,const std::string& a,const std::string& d,const std::string& nT,const std::string& c){
+void Usuario::setUsuario(const char& n,const char& a,const char& d,const char& nT,const char& c){
 	nombre = n;
 	apellido = a;
 	dni = d;
