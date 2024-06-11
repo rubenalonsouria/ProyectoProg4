@@ -13,8 +13,8 @@
 #define SERVER_PORT 6000
 
 int main() {
-	ListaUsuarios lu;
-	ListaLibros lL;
+	//ListaUsuarios lu;
+	//ListaLibros lL;
 	Usuario u;
 	int tam, pos;
 	char opcion, opcionU, dni[8], titulo;
@@ -57,18 +57,18 @@ int main() {
 	printf("Connection stablished with: %s (%d)\n", inet_ntoa(server.sin_addr),
 			ntohs(server.sin_port));
 
-	lu.numU = 0;
-	lu.aUsuarios = NULL;
-	volcarFicheroAListaUsuarios(&lu, NOMFICH1);
+	//lu.numU = 0;
+	//lu.aUsuarios = NULL;
+	//volcarFicheroAListaUsuarios(&lu, NOMFICH1);
 
-	ListaAdmin la;
+	//ListaAdmin la;
 	Admin a;
 	int posA;
 	char opcionAd, opcionA;
 
-	la.numA = 0;
-	la.aAdmin = NULL;
-	volcarFicheroAListaAdmin(&la, NOMFICH2);
+	//la.numA = 0;
+	//la.aAdmin = NULL;
+	//volcarFicheroAListaAdmin(&la, NOMFICH2);
 
 do {
 	opcion = menuPrincipal();
@@ -147,16 +147,24 @@ do {
 
 		case '2':
 		a = conseguirAdmin();
-		posA = buscarAdmin(la, a.nombre);
-		if (posA == -1) {
-			printf("No existe este registro\n");
+		sprintf(sendBuff,"%s",a.nombre);
+		send(s,sendBuff,sizeof(sendBuff),0);
+		sprintf(sendBuff,"%s",a.contrasenya);
+		send(s,sendBuff,sizeof(sendBuff),0);
+
+		recv(s,recvBuff,sizeof(recvBuff),0);
+		//posA = buscarAdmin(la, a.nombre);
+		if (strncmp(recvBuff,"No existe este registro",23)==0) {
+			printf("%s\n",recvBuff);
 		} else {
-			if (contrasenyaCorrecta(la.aAdmin[posA].contrasenya,
-							a.contrasenya)) {
-				printf("Bienvenido\n");
+			if (strncmp(recvBuff,"Bienvenido",10)==0) {
+				printf("%s\n",recvBuff);
 				fflush(stdout);
 				do {
 					opcionA = menuAdmin();
+					sprintf(sendBuff,"%c",opcionA);
+					send(s,sendBuff,sizeof(sendBuff),0);
+
 					switch (opcionA) {
 						case '0':
 						printf("Volviendo al menu principal\n");
@@ -172,22 +180,31 @@ do {
 						break;
 						case '4':
 						u = conseguirUsuario();
-						aniadirUsuario(&lu, u);
+						//aniadirUsuario(&lu, u);
+						sprintf(sendBuff,"%s",u.dni);
+						send(s,sendBuff,sizeof(sendBuff),0);
+						sprintf(sendBuff,"%s",u.nombre);
+						send(s,sendBuff,sizeof(sendBuff),0);
+						sprintf(sendBuff,"%s",u.apellido);
+						send(s,sendBuff,sizeof(sendBuff),0);
+						sprintf(sendBuff,"%s",u.numTarjeta);
+						send(s,sendBuff,sizeof(sendBuff),0);
+						sprintf(sendBuff,"%s",u.contrasenya);
+						send(s,sendBuff,sizeof(sendBuff),0);
+						recv(s,recvBuff,sizeof(recvBuff),0);
+						printf("%s\n",recvBuff);
 						break;
 						case '5':
 						printf("Introduce el dni del usuario a eliminar: ");
 						fflush(stdout);
 						fflush(stdin);
 						gets(u.dni);
-						pos = buscarUsuario(lu, u.dni);
-						if (pos == -1) {
-							printf("ERROR! Usuario no encontrado\n");
-							fflush(stdout);
-						} else {
-							eliminarUsuario(&lu, pos);
-							printf("Usuario eliminado correctamente\n");
-							fflush(stdout);
-						}
+						//pos = buscarUsuario(lu, u.dni);
+						sprintf(sendBuff,"%s",u.dni);
+						send(s,sendBuff,sizeof(sendBuff),0);
+						recv(s,recvBuff,sizeof(recvBuff),0);
+						printf("%s\n",recvBuff);
+
 						break;
 						case '6':
 						printf(
@@ -195,7 +212,24 @@ do {
 						fflush(stdout);
 						fflush(stdin);
 						gets(u.dni);
-						buscarUsuario(lu, dni);
+						sprintf(sendBuff,"%s",u.dni);
+						send(s,sendBuff,sizeof(sendBuff),0);
+
+						recv(s,recvBuff,sizeof(recvBuff),0);
+						if(strncmp(recvBuff,"Usuario no encontrado",21)==0){
+							printf("%s\n",recvBuff);
+						}else{
+							sprintf(dni,"%s",recvBuff);
+							recv(s,recvBuff,sizeof(recvBuff),0);
+							sprintf(u.nombre,"%s",recvBuff);
+							recv(s,recvBuff,sizeof(recvBuff),0);
+							sprintf(u.apellido,"%s",recvBuff);
+							recv(s,recvBuff,sizeof(recvBuff),0);
+							sprintf(u.numTarjeta,"%s",recvBuff);
+							recv(s,recvBuff,sizeof(recvBuff),0);
+							sprintf(u.contrasenya,"%s",recvBuff);
+							printf("%s %s %s %s %s\n",u.dni,u.nombre,u.apellido,u.numTarjeta,u.contrasenya);
+						}
 						break;
 						default:
 						printf("La opcion seleccionada no es correcta\n");
@@ -233,7 +267,7 @@ do {
 			fflush(stdout);
 		}
 	}while (opcion != '0');
-	free(lu.aUsuarios);
+	//free(lu.aUsuarios);
 
 	// CLOSING the socket and cleaning Winsock...
 	closesocket(s);

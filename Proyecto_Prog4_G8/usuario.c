@@ -20,7 +20,7 @@ Usuario conseguirUsuario(){
 	printf("Introduzca el numero de tarjeta:  \n");
 	fflush(stdout);
 	fflush(stdin);
-	scanf("%d",u.numTarjeta);
+	gets(u.numTarjeta);
 	printf("Introduzca la contraseña: \n");
 	fflush(stdout);
 	fflush(stdin);
@@ -30,7 +30,7 @@ Usuario conseguirUsuario(){
 }
 
 void mostrarUsuario(Usuario u){
-	printf("%10s%10s%10d", u.nombre, u.apellido,u.dni);
+	printf("%10s%10s%10s\n", u.nombre, u.apellido,u.dni);
 	fflush(stdout);
 }
 
