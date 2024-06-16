@@ -11,13 +11,13 @@ class Usuario {
     char contrasenya;
 public:
     Usuario();
-    Usuario(const char& n, const char& a, const char& d, const char& nT, const char& c);
-    const char& getDni() const;
-    const char& getNombre() const;
-    const char& getApellido() const;
-    const char& getNumTarjeta() const;
-    const char& getContrasenya() const;
-    void setUsuario(const char& nombre,const char& apellido,const char& dni,const char& numTarjeta,const char& contrasenya);
+    Usuario(const char n, const char a, const char d, const char nT, const char c);
+    char getDni() const;
+    char getNombre() const;
+    char getApellido() const;
+    char getNumTarjeta() const;
+    char getContrasenya() const;
+    void setUsuario(const char nombre,const char apellido,const char dni,const char numTarjeta,const char contrasenya);
     virtual ~Usuario();
 };
 
