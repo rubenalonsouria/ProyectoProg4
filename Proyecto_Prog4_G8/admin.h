@@ -12,7 +12,7 @@ typedef struct admin{
 	char nombre[20];
 	char apellido[20];
 	char dni[8];
-	int numTarjeta[12];
+	char numTarjeta[16];
 	char contrasenya[20];
 }Admin;
 

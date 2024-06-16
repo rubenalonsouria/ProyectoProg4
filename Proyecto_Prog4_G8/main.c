@@ -64,7 +64,7 @@ int main() {
 	//ListaAdmin la;
 	Admin a;
 	int posA;
-	char opcionAd, opcionA;
+	char opcionA;
 
 	//la.numA = 0;
 	//la.aAdmin = NULL;
@@ -114,8 +114,7 @@ do {
 					//aniadirLibroaFichero(l);  Esto al servidor
 					break;
 					case '2':
-					printf(
-							"Introduzca el titulo del libro a devolver\n");
+					printf("Introduzca el titulo del libro a devolver\n");
 					fflush(stdout);
 					fflush(stdin);
 					scanf(l.titulo);
@@ -139,13 +138,14 @@ do {
 					printf("La opcion seleccionada no es correcta\n");
 				}
 			}while (opcionU != '0');
-			printf("La contraseña no es correcta\n");
+			printf("La opcion seleccionada no es correcta\n");
 			fflush(stdout);
 		}
 
 		break;
 
 		case '2':
+<<<<<<< HEAD
 		a = conseguirAdmin();
 		sprintf(sendBuff,"%s",a.nombre);
 		send(s,sendBuff,sizeof(sendBuff),0);
@@ -156,6 +156,61 @@ do {
 		//posA = buscarAdmin(la, a.nombre);
 		if (strncmp(recvBuff,"No existe este registro",23)==0) {
 			printf("%s\n",recvBuff);
+=======
+			a = conseguirAdmin();
+			sprintf(sendBuff,"%s",a.nombre);
+			send(s,sendBuff,sizeof(sendBuff),0);
+			sprintf(sendBuff,"%s",a.contrasenya);
+			send(s,sendBuff,sizeof(sendBuff),0);
+
+			recv(s,recvBuff,sizeof(recvBuff),0);
+			if(strcmp(recvBuff,"No existe este registro\n")==0) {
+				printf("%s",recvBuff);
+			} else {
+				printf("%s",recvBuff);
+				do {
+					opcionA = menuAdmin();
+					sprintf(sendBuff,"%c",opcionU);
+					send(s,sendBuff,sizeof(sendBuff),0);
+
+					switch (opcionA) {
+						case '0':
+						printf("Volviendo al menu principal\n");
+						fflush(stdout);
+						break;
+						case '1':
+						break;
+
+						case '2':
+						break;
+
+						case '3':
+						break;
+
+						case '4':
+						break;
+
+						case '5':
+						break;
+
+						case '6':
+						break;
+
+						default:
+						printf("La opcion seleccionada no es correcta\n");
+
+					}
+				}while (opcionA != '0');
+				printf("La opcion seleccionada no es correcta\n");
+				fflush(stdout);
+			}
+			break;
+
+/*		a = conseguirAdmin();
+		posA = buscarAdmin(la, a.nombre);
+		if (posA == -1) {
+			printf("No existe este registro\n");
+>>>>>>> branch 'master' of https://github.com/rubenalonsouria/ProyectoProg4
 		} else {
 			if (strncmp(recvBuff,"Bienvenido",10)==0) {
 				printf("%s\n",recvBuff);
@@ -241,7 +296,7 @@ do {
 			}
 		}
 		break;
-
+*/
 		case '3':
 			u = conseguirUsuario();
 			sprintf(sendBuff,"%s",u.dni);
@@ -261,6 +316,34 @@ do {
 			recv(s,recvBuff,sizeof(recvBuff),0);
 			printf("%s",recvBuff);
 
+			break;
+		case '4':  // Nueva opción para "Has olvidado tu contraseña"
+				printf("Introduce tu dni: ");
+
+			    scanf("%s", dni);
+			    sprintf(sendBuff, "Contrasenya olvidada");
+			    send(s, sendBuff, sizeof(sendBuff), 0);
+			    sprintf(sendBuff, "%s", dni);
+			    send(s, sendBuff, sizeof(sendBuff), 0);
+			    recv(s, recvBuff, sizeof(recvBuff), 0);
+			    printf("%s\n", recvBuff);
+
+			    // Recibir mensaje del servidor para pedir una nueva contraseña
+			    recv(s, recvBuff, sizeof(recvBuff), 0);
+			    printf("%s", recvBuff);
+
+			    // Pedir al usuario una nueva contraseña
+			    char nuevaContrasenya[20];
+			    printf("Introduce tu nueva contraseña: ");
+			    scanf("%s", nuevaContrasenya);
+
+			    // Enviar la nueva contraseña al servidor
+			    sprintf(sendBuff, "%s", nuevaContrasenya);
+			    send(s, sendBuff, sizeof(sendBuff), 0);
+
+			    // Recibir mensaje de confirmación del servidor
+			    recv(s, recvBuff, sizeof(recvBuff), 0);
+			    printf("%s\n", recvBuff);
 			break;
 			default:
 			printf("La opcion seleccionada no es correcta\n");
