@@ -83,7 +83,6 @@ int BaseDeDatos::buscarUsuario(const char *dni) {
 }
 
 Usuario* BaseDeDatos::obtenerUsuario(const char *dni){
-	int resultado;
 	char sql[200];
 	sprintf(sql, "SELECT * FROM Usuario WHERE dni='%s';", dni);
 	sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
@@ -120,16 +119,15 @@ int BaseDeDatos::buscarDni(const char *dni) {
     return resultado;
 }
 
-char BaseDeDatos::getContrasenya(const char *dni) {
-    char contrasenya;
+char* BaseDeDatos::getContrasenya(const char *dni) {
+    char *contrasenya  =new char[30];
     char sql[200];
     sprintf(sql, "SELECT contrasenya FROM Usuario WHERE dni='%s';", dni);
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
     if (sqlite3_step(stmt) == SQLITE_ROW) {
-        const unsigned char *dbContrasenya = sqlite3_column_text(stmt, 0);
-        contrasenya = reinterpret_cast<const char*>(dbContrasenya);
+    	sprintf(contrasenya, "%s", (char*)sqlite3_column_text(stmt, 0));
     } else {
-        contrasenya = "No encontrada";
+        strcpy(contrasenya,"No encontrada");
     }
     sqlite3_finalize(stmt);
     return contrasenya;
@@ -160,7 +158,7 @@ int BaseDeDatos::buscarLibro(const char *isbn) {
     return resultado;
 }
 
-int BaseDeDatos::contrasenyaCorrecta(const char nombre, const char contrasenya) {
+int BaseDeDatos::contrasenyaCorrecta(const char *nombre, const char *contrasenya) {
     char sql[256];
     int correcta = 0;
     sprintf(sql, "SELECT contrasenya FROM Usuario WHERE nombre='%s';");
@@ -193,7 +191,7 @@ void BaseDeDatos::eliminarLibro(const Libro& l) {
     sqlite3_finalize(stmt);
 }
 
-int BaseDeDatos::contrasenyaAdminCorrecta(const char nombre, const char contrasenya) {
+int BaseDeDatos::contrasenyaAdminCorrecta(const char *nombre, const char *contrasenya) {
     char sql[256];
     int correcta = 0;
     sprintf(sql, "SELECT contrasenya FROM Admin WHERE nombre='%s';");
@@ -228,7 +226,7 @@ int BaseDeDatos::buscarAdmin(const char *nombre) {
     return resultado;
 }
 
-void BaseDeDatos::actualizarContrasenyaUsuario(const char dni, const char nuevaContrasenya) {
+void BaseDeDatos::actualizarContrasenyaUsuario(const char *dni, const char *nuevaContrasenya) {
     char sql[256];
     sprintf(sql, "UPDATE Usuario SET contrasenya='%s' WHERE dni='%s';");
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
@@ -241,7 +239,7 @@ void BaseDeDatos::actualizarContrasenyaUsuario(const char dni, const char nuevaC
     sqlite3_finalize(stmt);
 }
 
-void BaseDeDatos::eliminarUsuario(const char dni) {
+void BaseDeDatos::eliminarUsuario(const char *dni) {
     char sql[256];
     sprintf(sql, "DELETE FROM Usuario WHERE dni='%s';");
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {

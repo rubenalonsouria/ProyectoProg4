@@ -11,7 +11,7 @@ using namespace std;
 
 #define NOMFICH "Configuracion.txt"
 
-void leerFicheroConfig(char *nomfich, char *nombre_bd, char *server_ip, int *server_port) {
+void leerFicheroConfig(const char *nomfich, char *nombre_bd, char *server_ip, int *server_port) {
     ifstream ifs(nomfich);
     char linea[200];
     ifs >> linea;
