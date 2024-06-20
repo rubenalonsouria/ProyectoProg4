@@ -145,7 +145,6 @@ do {
 		break;
 
 		case '2':
-<<<<<<< HEAD
 		a = conseguirAdmin();
 		sprintf(sendBuff,"%s",a.nombre);
 		send(s,sendBuff,sizeof(sendBuff),0);
@@ -156,7 +155,6 @@ do {
 		//posA = buscarAdmin(la, a.nombre);
 		if (strncmp(recvBuff,"No existe este registro",23)==0) {
 			printf("%s\n",recvBuff);
-=======
 			a = conseguirAdmin();
 			sprintf(sendBuff,"%s",a.nombre);
 			send(s,sendBuff,sizeof(sendBuff),0);
@@ -164,6 +162,7 @@ do {
 			send(s,sendBuff,sizeof(sendBuff),0);
 
 			recv(s,recvBuff,sizeof(recvBuff),0);
+		}
 			if(strcmp(recvBuff,"No existe este registro\n")==0) {
 				printf("%s",recvBuff);
 			} else {
@@ -205,98 +204,6 @@ do {
 				fflush(stdout);
 			}
 			break;
-
-/*		a = conseguirAdmin();
-		posA = buscarAdmin(la, a.nombre);
-		if (posA == -1) {
-			printf("No existe este registro\n");
->>>>>>> branch 'master' of https://github.com/rubenalonsouria/ProyectoProg4
-		} else {
-			if (strncmp(recvBuff,"Bienvenido",10)==0) {
-				printf("%s\n",recvBuff);
-				fflush(stdout);
-				do {
-					opcionA = menuAdmin();
-					sprintf(sendBuff,"%c",opcionA);
-					send(s,sendBuff,sizeof(sendBuff),0);
-
-					switch (opcionA) {
-						case '0':
-						printf("Volviendo al menu principal\n");
-						fflush(stdout);
-						break;
-						case '1':
-						l = conseguirLibro();
-						aniadirLibroaFichero(l);
-						break;
-						case '2':
-						break;
-						case '3':
-						break;
-						case '4':
-						u = conseguirUsuario();
-						//aniadirUsuario(&lu, u);
-						sprintf(sendBuff,"%s",u.dni);
-						send(s,sendBuff,sizeof(sendBuff),0);
-						sprintf(sendBuff,"%s",u.nombre);
-						send(s,sendBuff,sizeof(sendBuff),0);
-						sprintf(sendBuff,"%s",u.apellido);
-						send(s,sendBuff,sizeof(sendBuff),0);
-						sprintf(sendBuff,"%s",u.numTarjeta);
-						send(s,sendBuff,sizeof(sendBuff),0);
-						sprintf(sendBuff,"%s",u.contrasenya);
-						send(s,sendBuff,sizeof(sendBuff),0);
-						recv(s,recvBuff,sizeof(recvBuff),0);
-						printf("%s\n",recvBuff);
-						break;
-						case '5':
-						printf("Introduce el dni del usuario a eliminar: ");
-						fflush(stdout);
-						fflush(stdin);
-						gets(u.dni);
-						//pos = buscarUsuario(lu, u.dni);
-						sprintf(sendBuff,"%s",u.dni);
-						send(s,sendBuff,sizeof(sendBuff),0);
-						recv(s,recvBuff,sizeof(recvBuff),0);
-						printf("%s\n",recvBuff);
-
-						break;
-						case '6':
-						printf(
-								"Introduce el dni del usuario que deseas buscar: ");
-						fflush(stdout);
-						fflush(stdin);
-						gets(u.dni);
-						sprintf(sendBuff,"%s",u.dni);
-						send(s,sendBuff,sizeof(sendBuff),0);
-
-						recv(s,recvBuff,sizeof(recvBuff),0);
-						if(strncmp(recvBuff,"Usuario no encontrado",21)==0){
-							printf("%s\n",recvBuff);
-						}else{
-							sprintf(dni,"%s",recvBuff);
-							recv(s,recvBuff,sizeof(recvBuff),0);
-							sprintf(u.nombre,"%s",recvBuff);
-							recv(s,recvBuff,sizeof(recvBuff),0);
-							sprintf(u.apellido,"%s",recvBuff);
-							recv(s,recvBuff,sizeof(recvBuff),0);
-							sprintf(u.numTarjeta,"%s",recvBuff);
-							recv(s,recvBuff,sizeof(recvBuff),0);
-							sprintf(u.contrasenya,"%s",recvBuff);
-							printf("%s %s %s %s %s\n",u.dni,u.nombre,u.apellido,u.numTarjeta,u.contrasenya);
-						}
-						break;
-						default:
-						printf("La opcion seleccionada no es correcta\n");
-					}
-				}while (opcionA != '0');
-			} else {
-				printf("La contraseña no es correcta\n");
-				fflush(stdout);
-			}
-		}
-		break;
-*/
 		case '3':
 			u = conseguirUsuario();
 			sprintf(sendBuff,"%s",u.dni);
