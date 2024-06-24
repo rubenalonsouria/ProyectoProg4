@@ -81,7 +81,7 @@ do {
 		break;
 		case '1':
 		u = conseguirUsuario();
-		sprintf(sendBuff,"%s",u.nombre);
+		sprintf(sendBuff,"%s",u.dni);
 		send(s,sendBuff,sizeof(sendBuff),0);
 		sprintf(sendBuff,"%s",u.contrasenya);
 		send(s,sendBuff,sizeof(sendBuff),0);
@@ -102,26 +102,29 @@ do {
 					fflush(stdout);
 					break;
 					case '1':
-					l = conseguirLibro();
-					sprintf(sendBuff,"%s",l.titulo);
-					send(s,sendBuff,sizeof(sendBuff),0);
-					sprintf(sendBuff,"%s",l.editorial);
-					send(s,sendBuff,sizeof(sendBuff),0);
-					sprintf(sendBuff,"%s",l.autor);
-					send(s,sendBuff,sizeof(sendBuff),0);
-					sprintf(sendBuff,"%s",l.isbn);
-					send(s,sendBuff,sizeof(sendBuff),0);
+						l = conseguirLibro();
+						sprintf(sendBuff,"%s",l.titulo);
+						send(s,sendBuff,sizeof(sendBuff),0);
+						sprintf(sendBuff,"%s",l.editorial);
+						send(s,sendBuff,sizeof(sendBuff),0);
+						sprintf(sendBuff,"%s",l.autor);
+						send(s,sendBuff,sizeof(sendBuff),0);
+						sprintf(sendBuff,"%s",l.isbn);
+						send(s,sendBuff,sizeof(sendBuff),0);
+						recv(s,recvBuff,sizeof(recvBuff),0);
+						printf("%s\n",recvBuff);
+
 					//aniadirLibroaFichero(l);  Esto al servidor
 					break;
 					case '2':
-					printf("Introduzca el titulo del libro a devolver\n");
-					fflush(stdout);
-					fflush(stdin);
-					scanf(l.titulo);
-					sprintf(sendBuff,"%s",l.titulo);
-					send(s,sendBuff,sizeof(sendBuff),0);
-					recv(s,recvBuff,sizeof(recvBuff),0);
-					printf("%s\n",recvBuff);
+						printf("Introduzca el titulo del libro a devolver\n");
+						fflush(stdout);
+						fflush(stdin);
+						gets(l.titulo);
+						sprintf(sendBuff,"%s",l.titulo);
+						send(s,sendBuff,sizeof(sendBuff),0);
+						recv(s,recvBuff,sizeof(recvBuff),0);
+						printf("%s\n",recvBuff);
 
 					break;
 					case '3':
@@ -131,16 +134,15 @@ do {
 					printf("Introduce el titulo a buscar \n");
 					fflush(stdout);
 					fflush(stdin);
-					scanf(l.titulo);
+					gets(l.titulo);
 
 					break;
 					default:
-					printf("La opcion seleccionada no es correcta\n");
+						recv(s,recvBuff,sizeof(recvBuff),0);
+						printf("%s\n",recvBuff);
 				}
 			}while (opcionU != '0');
-			printf("La opcion seleccionada no es correcta\n");
-			fflush(stdout);
-		}
+			}
 
 		break;
 

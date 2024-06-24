@@ -12,7 +12,7 @@ Libro conseguirLibro(){
 	printf("Introduzca el isbn: \n");
 	fflush(stdout);
 	fflush(stdin);
-	scanf("%d", l.isbn);
+	gets(l.isbn);
 	printf("Introduzca la editorial: \n");
 	fflush(stdout);
 	fflush(stdin);
