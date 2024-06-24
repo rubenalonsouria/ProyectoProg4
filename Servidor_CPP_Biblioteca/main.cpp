@@ -33,7 +33,6 @@ void manejarCliente(SOCKET comm_socket, BaseDeDatos &bd) {
     int pos, esCorrecta;
     Libro l;
     Usuario u;
-
     do {
         memset(recvBuff, 0, sizeof(recvBuff));
         recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
@@ -42,17 +41,18 @@ void manejarCliente(SOCKET comm_socket, BaseDeDatos &bd) {
         switch (opcion) {
             case '1':
                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                sscanf(recvBuff, "%s", nombre);
+                sprintf(dni, "%s", recvBuff);
                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                sscanf(recvBuff, "%s", contrasenya);
-
-                pos = bd.buscarUsuario(nombre);
-                esCorrecta = bd.contrasenyaCorrecta(nombre, contrasenya);
+                sprintf(contrasenya, "%s", recvBuff);
+                pos = bd.buscarUsuario(dni);
+                esCorrecta = bd.contrasenyaCorrecta(dni, contrasenya);
 
                 if (pos == -1) {
-                    sprintf(sendBuff, "No existe este registro\n");
+                	sprintf(sendBuff, "No existe este registro\n");
+                    send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+
                 } else if (esCorrecta) {
-                    sprintf(sendBuff, "Bienvenido\n");
+                	sprintf(sendBuff, "Bienvenido\n");
                     send(comm_socket, sendBuff, sizeof(sendBuff), 0);
                     do {
                         memset(recvBuff, 0, sizeof(recvBuff));
@@ -62,13 +62,13 @@ void manejarCliente(SOCKET comm_socket, BaseDeDatos &bd) {
                             case '1':
                                 // Añadir libro
                                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                                sscanf(recvBuff, "%s", titulo);
+                                sprintf(titulo, "%s", recvBuff);
                                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                                sscanf(recvBuff, "%s", editorial);
+                                sprintf(editorial, "%s", recvBuff);
                                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                                sscanf(recvBuff, "%s", autor);
+                                sprintf(autor, "%s", recvBuff);
                                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                                sscanf(recvBuff, "%s", isbn);
+                                sprintf(isbn, "%s", recvBuff);
                                 l.setLibro(titulo, editorial, autor, isbn);
                                 bd.insertarLibro(l);
                                 sprintf(sendBuff, "Libro añadido\n");
@@ -77,7 +77,7 @@ void manejarCliente(SOCKET comm_socket, BaseDeDatos &bd) {
                             case '2':
                                 // Devolver libro
                                 recv(comm_socket, recvBuff, sizeof(recvBuff), 0);
-                                sscanf(recvBuff, "%s", isbn);
+                                sprintf(isbn, "%s", recvBuff);
                                 pos = bd.buscarLibro(isbn);
                                 if (pos == -1) {
                                     sprintf(sendBuff, "No existe ese libro\n");
@@ -105,9 +105,10 @@ void manejarCliente(SOCKET comm_socket, BaseDeDatos &bd) {
                         }
                     } while (opcionU != '0');
                 } else {
-                    sprintf(sendBuff, "Contraseña incorrecta\n");
+                	sprintf(sendBuff, "Contraseña incorrecta\n");
+                    send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+
                 }
-                send(comm_socket, sendBuff, sizeof(sendBuff), 0);
                 break;
 
             case '2':
@@ -121,6 +122,8 @@ void manejarCliente(SOCKET comm_socket, BaseDeDatos &bd) {
 
                 if (pos == -1) {
                     sprintf(sendBuff, "No existe este registro");
+                    send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+
                 } else if (esCorrecta) {
                     sprintf(sendBuff, "Bienvenido\n");
                     send(comm_socket, sendBuff, sizeof(sendBuff), 0);
@@ -178,6 +181,7 @@ void manejarCliente(SOCKET comm_socket, BaseDeDatos &bd) {
                             		sprintf(sendBuff,"%s",u->getContrasenya());
                             		send(comm_socket,sendBuff,sizeof(sendBuff),0);
                             	}
+                            	break;
                             default:
                                 sprintf(sendBuff, "Opción incorrecta\n");
                                 send(comm_socket, sendBuff, sizeof(sendBuff), 0);
@@ -187,8 +191,10 @@ void manejarCliente(SOCKET comm_socket, BaseDeDatos &bd) {
                     } while (opcionA != '0');
                 } else {
                     sprintf(sendBuff, "Contraseña incorrecta\n");
+                    send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+
                 }
-                send(comm_socket, sendBuff, sizeof(sendBuff), 0);
+
                 break;
 
             case '3':
@@ -258,7 +264,6 @@ int main() {
     BaseDeDatos bd(nombre_bd);
     bd.conectar();
     bd.crearTablas();
-
     while (1) {
         client_addr_len = sizeof(client_addr);
         comm_socket = accept(listening_socket, (struct sockaddr*)&client_addr, &client_addr_len);

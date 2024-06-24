@@ -23,7 +23,7 @@ public:
     char* getContrasenya(const char *dni);  // Añadir declaración
     void insertarLibro(const Libro &l);
     int buscarLibro(const char *isbn);
-    int contrasenyaCorrecta(const char *nombre, const char *contrasenya);
+    int contrasenyaCorrecta(const char *dni, const char *contrasenya);
     void eliminarLibro(const Libro& l);
     int contrasenyaAdminCorrecta(const char *nombre, const char *contrasenya);
     int buscarAdmin(const char *nombre);

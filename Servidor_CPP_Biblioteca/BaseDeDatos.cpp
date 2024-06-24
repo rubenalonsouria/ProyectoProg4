@@ -138,6 +138,7 @@ void BaseDeDatos::insertarLibro(const Libro &l) {
     sprintf(sql, "INSERT INTO Libro (titulo, editorial, autor, isbn) VALUES "
                  "('%s', '%s', '%s', '%s');",
                  l.getTitulo(), l.getEditorial(), l.getAutor(), l.getIsbn());
+
     sqlite3_prepare_v2(db, sql, -1, &stmt, NULL);
     sqlite3_step(stmt);
     sqlite3_finalize(stmt);
@@ -158,19 +159,21 @@ int BaseDeDatos::buscarLibro(const char *isbn) {
     return resultado;
 }
 
-int BaseDeDatos::contrasenyaCorrecta(const char *nombre, const char *contrasenya) {
+int BaseDeDatos::contrasenyaCorrecta(const char *dni, const char *contrasenya) {
     char sql[256];
     int correcta = 0;
-    sprintf(sql, "SELECT contrasenya FROM Usuario WHERE nombre='%s';");
+    sprintf(sql, "SELECT contrasenya FROM Usuario WHERE dni='%s';",dni);
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
         std::cerr << "Error preparando el statement: " << sqlite3_errmsg(db) << std::endl;
         return 0;
     }
     if (sqlite3_step(stmt) == SQLITE_ROW) {
-        const unsigned char *dbContrasenya = sqlite3_column_text(stmt, 0);
-        if (dbContrasenya && contrasenya == reinterpret_cast<const char*>(dbContrasenya)) {
-            correcta = 1;
+        char dbContrasenya[20] ;
+        sprintf(dbContrasenya,"%s",sqlite3_column_text(stmt, 0));
+        if(strcmp(dbContrasenya,contrasenya)==0){
+        	correcta = 1;
         }
+
     } else {
         std::cerr << "Error ejecutando el statement o usuario no encontrado: " << sqlite3_errmsg(db) << std::endl;
     }
@@ -180,7 +183,7 @@ int BaseDeDatos::contrasenyaCorrecta(const char *nombre, const char *contrasenya
 
 void BaseDeDatos::eliminarLibro(const Libro& l) {
     char sql[256];
-    sprintf(sql, "DELETE FROM Libro WHERE isbn='%s';");
+    sprintf(sql, "DELETE FROM Libro WHERE isbn='%s';",l.getIsbn());
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
         std::cerr << "Error preparando el statement: " << sqlite3_errmsg(db) << std::endl;
         return;
@@ -194,7 +197,7 @@ void BaseDeDatos::eliminarLibro(const Libro& l) {
 int BaseDeDatos::contrasenyaAdminCorrecta(const char *nombre, const char *contrasenya) {
     char sql[256];
     int correcta = 0;
-    sprintf(sql, "SELECT contrasenya FROM Admin WHERE nombre='%s';");
+    sprintf(sql, "SELECT contrasenya FROM Admin WHERE nombre='%s';",nombre);
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
         std::cerr << "Error preparando el statement: " << sqlite3_errmsg(db) << std::endl;
         return 0;
@@ -228,7 +231,7 @@ int BaseDeDatos::buscarAdmin(const char *nombre) {
 
 void BaseDeDatos::actualizarContrasenyaUsuario(const char *dni, const char *nuevaContrasenya) {
     char sql[256];
-    sprintf(sql, "UPDATE Usuario SET contrasenya='%s' WHERE dni='%s';");
+    sprintf(sql, "UPDATE Usuario SET contrasenya='%s' WHERE dni='%s';",dni);
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
         std::cerr << "Error preparando el statement: " << sqlite3_errmsg(db) << std::endl;
         return;
@@ -241,7 +244,7 @@ void BaseDeDatos::actualizarContrasenyaUsuario(const char *dni, const char *nuev
 
 void BaseDeDatos::eliminarUsuario(const char *dni) {
     char sql[256];
-    sprintf(sql, "DELETE FROM Usuario WHERE dni='%s';");
+    sprintf(sql, "DELETE FROM Usuario WHERE dni='%s';",dni);
     if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK) {
         std::cerr << "Error preparando el statement: " << sqlite3_errmsg(db) << std::endl;
         return;
@@ -251,6 +254,8 @@ void BaseDeDatos::eliminarUsuario(const char *dni) {
     }
     sqlite3_finalize(stmt);
 }
+
+
 
 BaseDeDatos::~BaseDeDatos() {
     delete[] nomBD;
